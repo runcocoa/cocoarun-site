@@ -24,18 +24,18 @@ HEAD = '''<!doctype html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{title}</title>
 <meta name="description" content="{desc}">
-<link rel="icon" type="image/png" href="/assets/favicon.png">
-<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-<link rel="stylesheet" href="/assets/fonts.css">
-<link rel="stylesheet" href="/assets/site.css">
+<link rel="icon" type="image/png" href="{r}assets/favicon.png">
+<link rel="apple-touch-icon" href="{r}assets/apple-touch-icon.png">
+<link rel="stylesheet" href="{r}assets/fonts.css">
+<link rel="stylesheet" href="{r}assets/site.css">
 </head>
 <body>
 <header class="top">
-<a class="brand" href="/">Cocoa Run</a>
+<a class="brand" href="{home}">Cocoa Run</a>
 <nav aria-label="Main">
-<a href="/support/"{s_cur}>Support</a>
-<a href="/privacy/"{p_cur}>Privacy</a>
-<a href="/terms/"{t_cur}>Terms</a>
+<a href="{r}support/"{s_cur}>Support</a>
+<a href="{r}privacy/"{p_cur}>Privacy</a>
+<a href="{r}terms/"{t_cur}>Terms</a>
 </nav>
 </header>
 '''
@@ -49,9 +49,9 @@ FOOT = '''<footer class="foot">
 '''
 
 
-def head(title, desc, current=''):
+def head(title, desc, current='', r=''):
     cur = ' aria-current="page"'
-    return HEAD.format(title=html.escape(title), desc=html.escape(desc),
+    return HEAD.format(r=r, home=r or './', title=html.escape(title), desc=html.escape(desc),
                        s_cur=cur if current == 'support' else '',
                        p_cur=cur if current == 'privacy' else '',
                        t_cur=cur if current == 'terms' else '')
@@ -61,7 +61,7 @@ def inline(text):
     text = html.escape(text, quote=False)
     text = re.sub(r'\*\*(.+?)\*\*', r'<strong>\1</strong>', text)
     text = re.sub(r'(https?://[^\s<)]+)', r'<a href="\1">\1</a>', text)
-    text = re.sub(r'([\w.+-]+@[\w-]+\.[\w.]+)', r'<a href="mailto:\1">\1</a>', text)
+    text = re.sub(r'([\w.+-]+@[\w-]+(?:\.[\w-]+)+)', r'<a href="mailto:\1">\1</a>', text)
     return text
 
 
@@ -117,7 +117,7 @@ def doc_page(slug, name, title, desc, fixes):
     if left:
         sys.exit(f'{name}: placeholders left: {left}')
     body = '<main class="doc">\n' + md_to_html(md) + '\n</main>\n'
-    write(f'{slug}/index.html', head(title, desc, slug) + body + FOOT)
+    write(f'{slug}/index.html', head(title, desc, slug, '../') + body + FOOT)
 
 
 def main():
@@ -138,8 +138,8 @@ def main():
     # The two lines above become plain text; make them links.
     p = os.path.join(HERE, 'support/index.html')
     s = open(p).read()
-    s = s.replace('Privacy Policy: /privacy/', '<a href="/privacy/">Privacy Policy</a>')
-    s = s.replace('Terms of Use: /terms/', '<a href="/terms/">Terms of Use</a>')
+    s = s.replace('Privacy Policy: /privacy/', '<a href="../privacy/">Privacy Policy</a>')
+    s = s.replace('Terms of Use: /terms/', '<a href="../terms/">Terms of Use</a>')
     open(p, 'w').write(s)
 
     home = head('Cocoa Run: beat the clock for gold',
@@ -151,7 +151,7 @@ def main():
 <p class="lead">Zack left his hot cocoa behind. Chase his train up 8 mountains, beat the clock on 40 levels and win gold before the cocoa goes cold.</p>
 <p class="soon">Coming soon to the App Store</p>
 </div>
-<img class="hero-art" src="/assets/monty-wave.png" width="504" height="560" alt="Monty the fox in orange goggles and a blue scarf, waving">
+<img class="hero-art" src="assets/monty-wave.png" width="504" height="560" alt="Monty the fox in orange goggles and a blue scarf, waving">
 </section>
 <section class="band">
 <ul class="cards">
@@ -161,7 +161,7 @@ def main():
 </ul>
 </section>
 <section class="summit">
-<img src="/assets/treehouse.png" width="1100" height="903" alt="Zack's treehouse built into a giant pine at the top of the mountain, with a spiral stair, a tube slide and a red train at its station">
+<img src="assets/treehouse.png" width="1100" height="903" alt="Zack's treehouse built into a giant pine at the top of the mountain, with a spiral stair, a tube slide and a red train at its station">
 <div>
 <h2>The last stop is Zack's treehouse</h2>
 <p>Every mountain gets you closer. Deliver the cocoa while it is still piping hot.</p>
