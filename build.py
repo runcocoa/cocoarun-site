@@ -41,8 +41,7 @@ HEAD = '''<!doctype html>
 '''
 
 FOOT = '''<footer class="foot">
-<p>Cocoa Run is made by Gettmi Inc. Limited.</p>
-<p><a href="mailto:info@gettmi.com">info@gettmi.com</a></p>
+<p><a href="mailto:support@cocoarun.com">support@cocoarun.com</a></p>
 </footer>
 </body>
 </html>
