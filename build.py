@@ -14,7 +14,7 @@ DRAFTS = os.path.expanduser('~/Documents/cocoa-run-assets/2026-09-24-app-store-l
 HERE = os.path.dirname(os.path.abspath(__file__))
 
 EFFECTIVE_DATE = '24 September 2026'
-PRIVACY_DATE = '26 September 2026'  # PostHog added to the services list
+PRIVACY_DATE = '28 September 2026'  # Reward verification and bug-report disclosures updated
 RETENTION_CRASH = 'no longer than 90 days'
 BANNED = [chr(c) for c in (0x2014, 0x2013, 0x2192, 0x2022, 0xB7)]
 
