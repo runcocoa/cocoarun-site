@@ -14,8 +14,7 @@ DRAFTS = os.path.expanduser('~/Documents/cocoa-run-assets/2026-09-24-app-store-l
 HERE = os.path.dirname(os.path.abspath(__file__))
 
 EFFECTIVE_DATE = '24 September 2026'
-PRIVACY_DATE = '28 September 2026'  # Reward verification and bug-report disclosures updated
-RETENTION_CRASH = 'no longer than 90 days'
+PRIVACY_DATE = '28 September 2026'  # Privacy disclosures updated
 BANNED = [chr(c) for c in (0x2014, 0x2013, 0x2192, 0x2022, 0xB7)]
 
 HEAD = '''<!doctype html>
@@ -124,7 +123,7 @@ def doc_page(slug, name, title, desc, fixes, footer=FOOT):
 def main():
     doc_page('privacy', 'privacy-policy', 'Cocoa Run Privacy Policy',
              'What Cocoa Run collects, why, and what you can do about it.',
-             [('{EFFECTIVE_DATE}', PRIVACY_DATE), ('{RETENTION_CRASH}', RETENTION_CRASH)],
+             [('{EFFECTIVE_DATE}', PRIVACY_DATE)],
              footer=NO_FOOT)
 
     terms = draft('terms-of-use')
