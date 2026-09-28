@@ -47,6 +47,7 @@ FOOT = '''<footer class="foot">
 </body>
 </html>
 '''
+NO_FOOT = '</body>\n</html>\n'
 
 
 def head(title, desc, current='', r=''):
@@ -109,7 +110,7 @@ def write(rel, text):
         f.write(text)
 
 
-def doc_page(slug, name, title, desc, fixes):
+def doc_page(slug, name, title, desc, fixes, footer=FOOT):
     md = re.sub(r'<!--.*?-->', '', draft(name), flags=re.S)
     for a, b in fixes:
         md = md.replace(a, b)
@@ -117,13 +118,14 @@ def doc_page(slug, name, title, desc, fixes):
     if left:
         sys.exit(f'{name}: placeholders left: {left}')
     body = '<main class="doc">\n' + md_to_html(md) + '\n</main>\n'
-    write(f'{slug}/index.html', head(title, desc, slug, '../') + body + FOOT)
+    write(f'{slug}/index.html', head(title, desc, slug, '../') + body + footer)
 
 
 def main():
     doc_page('privacy', 'privacy-policy', 'Cocoa Run Privacy Policy',
              'What Cocoa Run collects, why, and what you can do about it.',
-             [('{EFFECTIVE_DATE}', PRIVACY_DATE), ('{RETENTION_CRASH}', RETENTION_CRASH)])
+             [('{EFFECTIVE_DATE}', PRIVACY_DATE), ('{RETENTION_CRASH}', RETENTION_CRASH)],
+             footer=NO_FOOT)
 
     terms = draft('terms-of-use')
     law = re.search(r'\n## Law\n.*?(?=\n## |\Z)', terms, re.S)
@@ -168,7 +170,7 @@ def main():
 </div>
 </section>
 <section class="facts">
-<p>Free to play, with optional plans and in-app purchases. For ages 13 and over, in the United States.</p>
+<p>Free to play, with optional plans and in-app purchases. For ages 13 and over.</p>
 </section>
 </main>
 ''' + FOOT
